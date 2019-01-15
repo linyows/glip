@@ -1,0 +1,8 @@
+[package]
+name = "geoip"
+version = "0.1.0"
+authors = ["linyows <linyows@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+maxminddb = "0.12.0"
