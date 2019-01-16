@@ -289,9 +289,15 @@ fn main() {
     if let Err(err) = r {
         panic!(format!("error opening mmdb: {:?}", err));
     }
-    let record: geoip2::City = r.unwrap().lookup(ip).unwrap();
-    println!("{:?}", record);
-    println!("{}/{}", record.country.unwrap().names.unwrap().get("en").unwrap(), record.city.unwrap().names.unwrap().get("en").unwrap());
-    flag("Japan");
+    let ip: geoip2::City = r.unwrap().lookup(ip).unwrap();
+
+    let country = ip.country.unwrap().names.unwrap();
+    let country_name = country.get("en").unwrap();
+    let mut subdivs = ip.subdivisions.unwrap();
+    let subdiv = subdivs.pop().unwrap().names.unwrap();
+    let subdiv_name = subdiv.get("en").unwrap();
+    let city = ip.city.unwrap().names.unwrap();
+    let city_name = city.get("en").unwrap();
+    println!("{}  {}/{} -- {} city", flag(country_name), country_name, subdiv_name, city_name);
 }
 
