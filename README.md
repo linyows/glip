@@ -1,4 +1,4 @@
-GEOIP
+GeoIP
 ==
 
 Get country and city by IP Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation) as CLI.
