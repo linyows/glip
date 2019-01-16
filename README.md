@@ -8,7 +8,7 @@ Usage
 
 ```sh
 $ geoip 128.101.101.101
-🇺🇸United States/Saint Paul
+🇺🇸  United States -- Saint Paul, Minnesota
 ```
 
 Author
