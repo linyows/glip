@@ -1,7 +1,7 @@
-GEO IP address
+GEOIP
 ==
 
-Show location for IP by CLI with Maxmind
+Get country and city by IP Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation) as CLI.
 
 Usage
 --
@@ -9,6 +9,12 @@ Usage
 ```sh
 $ geoip 128.101.101.101
 🇺🇸  United States -- Saint Paul, Minnesota
+```
+Installation
+--
+
+```sh
+$ cargo install geoip
 ```
 
 Author
