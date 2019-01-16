@@ -298,6 +298,6 @@ fn main() {
     let subdiv_name = subdiv.get("en").unwrap();
     let city = ip.city.unwrap().names.unwrap();
     let city_name = city.get("en").unwrap();
-    println!("{}  {}/{} -- {} city", flag(country_name), country_name, subdiv_name, city_name);
+    println!("{}  {} -- {}, {}", flag(country_name), country_name, city_name, subdiv_name);
 }
 
