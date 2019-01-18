@@ -42,11 +42,7 @@ impl GeoIP {
         let metadata = fs::metadata(FILE);
         let modified = metadata.unwrap().modified().unwrap();
         let elapsed = modified.elapsed().unwrap();
-        if elapsed.as_secs() >= ELAPSE_MAX {
-            true
-        } else {
-            false
-        }
+        return elapsed.as_secs() >= ELAPSE_MAX;
     }
 
     fn download_file_if_not_exists_or_old() -> () {
