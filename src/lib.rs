@@ -1,5 +1,6 @@
 extern crate maxminddb;
 extern crate reqwest;
+extern crate libflate;
 
 mod emoji;
 use std::io;
@@ -9,11 +10,12 @@ use std::net::IpAddr;
 use std::str::FromStr;
 use std::env;
 use maxminddb::geoip2;
+use libflate::gzip::Decoder;
 
-static SOURCE: &'static str = "https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz";
-static TEMPFILE: &'static str = "geoip-db.tar.gz";
-static FILE: &'static str = "/usr/local/share/GeoIP/GeoLite2-City.mmdb";
-static ELAPSE_MAX: u64 = 3600 * 24 * 32;
+static SOURCE: &'static str = "https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz";
+static TEMPFILE: &'static str = "GeoLite2-City.mmdb.gz";
+static FILE: &'static str = "/usr/local/share/geoip/GeoLite2-City.mmdb";
+static EXPIRATION_DURATION: u64 = 3600 * 24 * 32;
 
 #[derive(Clone, Debug)]
 pub struct GeoIP {
@@ -24,36 +26,48 @@ pub struct GeoIP {
 }
 
 impl GeoIP {
-    fn download_file() -> () {
+    fn extract_file(fname: &str) {
+        let mut file = fs::File::open(fname).unwrap();
+        let mut decoder = Decoder::new(&mut file).unwrap();
+        let mut out = fs::File::create(FILE).expect("failed to create file");
+        io::copy(&mut decoder, &mut out).expect("failed to copy content");
+    }
+
+    fn download_file(fname: &str) {
         let path = Path::new(FILE);
         let pdir = path.parent().unwrap();
         if !Path::new(pdir).exists() {
-            fs::File::create(pdir).expect("failed to create dir");
+            fs::create_dir_all(pdir).expect("failed to create dir");
         }
         let mut resp = reqwest::get(SOURCE).expect("download failed");
-        let mut dir = env::temp_dir();
-        dir.push(TEMPFILE);
-        let mut out = fs::File::create(dir).expect("failed to create file");
+        let mut out: fs::File = fs::File::create(fname).expect("failed to create file");
         io::copy(&mut resp, &mut out).expect("failed to copy content");
-        println!("{:?}", out);
     }
 
-    fn is_old_file() -> bool {
+    fn file_expired() -> bool {
         let metadata = fs::metadata(FILE);
         let modified = metadata.unwrap().modified().unwrap();
         let elapsed = modified.elapsed().unwrap();
-        return elapsed.as_secs() >= ELAPSE_MAX;
+        return elapsed.as_secs() >= EXPIRATION_DURATION;
     }
 
-    fn download_file_if_not_exists_or_old() -> () {
-        let exists = Path::new(FILE).exists();
-        if !exists || (exists && Self::is_old_file()) {
-            Self::download_file();
+    fn download_and_extract_file_if_not_exists_or_old() {
+        if Path::new(FILE).exists() && !Self::file_expired() {
+            return
         }
+        let mut dir = env::temp_dir();
+        dir.push(TEMPFILE);
+        let fname = dir.as_path().to_str().unwrap();
+        println!("==> Database downloading...");
+        Self::download_file(fname);
+        println!("    Saved to {}", fname);
+        println!("==> Database extracting...");
+        Self::extract_file(fname);
+        println!("    Extracted to {}", FILE);
     }
 
     fn reader() -> Result<maxminddb::Reader<Vec<u8>>, maxminddb::MaxMindDBError> {
-        Self::download_file_if_not_exists_or_old();
+        Self::download_and_extract_file_if_not_exists_or_old();
         let rr = maxminddb::Reader::open_readfile(FILE);
         if let Err(err) = rr {
             panic!(format!("error opening mmdb: {:?}", err));
@@ -78,4 +92,3 @@ impl GeoIP {
         }
     }
 }
-
