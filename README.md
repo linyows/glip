@@ -1,20 +1,20 @@
-GeoIP
+GLIP
 ==
 
-Get country and city by IP Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation) as CLI.
+Geographic location for IP Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation).
 
 Usage
 --
 
 ```sh
-$ geoip 128.101.101.101
+$ glip 128.101.101.101
 🇺🇸  United States -- Saint Paul, Minnesota
 ```
 Installation
 --
 
 ```sh
-$ cargo install geoip
+$ cargo install glip
 ```
 
 Author

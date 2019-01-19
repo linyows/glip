@@ -1,4 +1,4 @@
-// geoip - Copyright 2019 Tomohisa Oda
+// glip - Copyright 2019 Tomohisa Oda
 
 use std::collections::HashMap;
 

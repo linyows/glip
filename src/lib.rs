@@ -1,4 +1,4 @@
-// geoip - Copyright 2019 Tomohisa Oda
+// glip - Copyright 2019 Tomohisa Oda
 
 extern crate maxminddb;
 extern crate reqwest;
@@ -16,18 +16,18 @@ use libflate::gzip::Decoder;
 
 static SOURCE: &'static str = "https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz";
 static TEMPFILE: &'static str = "GeoLite2-City.mmdb.gz";
-static FILE: &'static str = "/usr/local/share/geoip/GeoLite2-City.mmdb";
+static FILE: &'static str = "/usr/local/share/glip/GeoLite2-City.mmdb";
 static EXPIRATION_DURATION: u64 = 3600 * 24 * 32;
 
 #[derive(Clone, Debug)]
-pub struct GeoIP {
+pub struct GLIP {
     pub country: String,
     pub subdivision: String,
     pub city: String,
     pub flag: String,
 }
 
-impl GeoIP {
+impl GLIP {
     fn extract_file(fname: &str) {
         let mut file = fs::File::open(fname).unwrap();
         let mut decoder = Decoder::new(&mut file).unwrap();
@@ -86,7 +86,7 @@ impl GeoIP {
         let subdiv = subdivs.pop().unwrap().names.unwrap();
         let city = geoip.city.unwrap().names.unwrap();
 
-        GeoIP {
+        GLIP {
             country: c.to_string(),
             subdivision: subdiv.get("en").unwrap().to_string(),
             city: city.get("en").unwrap().to_string(),

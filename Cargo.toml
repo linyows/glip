@@ -1,13 +1,13 @@
 [package]
-name = "geoip"
+name = "glip"
 version = "0.3.0"
 authors = ["Tomohisa Oda <linyows@gmail.com>"]
-homepage = "https://github.com/linyows/geoip"
+homepage = "https://github.com/linyows/glip"
 license = "MIT"
 edition = "2018"
 readme = "README.md"
-repository = "https://github.com/linyows/geoip"
-description = "Get country and city by IP Address with MaxmindDB as CLI."
+repository = "https://github.com/linyows/glip"
+description = "Geographic location for IP Address with MaxmindDB."
 
 [dependencies]
 maxminddb = "0.12.0"

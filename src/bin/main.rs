@@ -1,15 +1,15 @@
-// geoip - Copyright 2019 Tomohisa Oda
+// glip - Copyright 2019 Tomohisa Oda
 
 #[macro_use]
 extern crate clap;
-extern crate geoip;
+extern crate glip;
 
 use clap::{App, Arg, AppSettings};
-use geoip::GeoIP;
+use glip::GLIP;
 use std::process;
 
 fn run(ipaddress: &str) {
-    let ip: GeoIP = GeoIP::new(ipaddress);
+    let ip = GLIP::new(ipaddress);
     println!("{}  {} -- {}, {}", ip.flag, ip.country, ip.city, ip.subdivision);
     process::exit(0);
 }
