@@ -3,6 +3,7 @@ name = "geoip"
 version = "0.3.0"
 authors = ["linyows <linyows@gmail.com>"]
 edition = "2018"
+description = "Get country and city by IP Address with MaxmindDB as CLI."
 
 [dependencies]
 maxminddb = "0.12.0"
