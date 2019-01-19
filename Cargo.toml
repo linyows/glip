@@ -2,7 +2,7 @@
 name = "geoip"
 version = "0.3.0"
 authors = ["linyows <linyows@gmail.com>"]
-edition = "2019"
+edition = "2018"
 
 [dependencies]
 maxminddb = "0.12.0"
