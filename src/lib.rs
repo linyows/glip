@@ -1,3 +1,5 @@
+// geoip - Copyright 2019 Tomohisa Oda
+
 extern crate maxminddb;
 extern crate reqwest;
 extern crate libflate;

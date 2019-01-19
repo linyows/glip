@@ -1,3 +1,5 @@
+// geoip - Copyright 2019 Tomohisa Oda
+
 use std::collections::HashMap;
 
 pub fn flag(name: &str) -> String {
