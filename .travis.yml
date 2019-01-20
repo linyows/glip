@@ -15,16 +15,6 @@ addons:
       - binutils-dev
       - libiberty-dev
 matrix:
-  fast_finish: true
-  include:
-    - rust: stable
-      env: RUSTFLAGS="-C target-cpu=native"
-    - rust: beta
-      env: RUSTFLAGS="-C target-cpu=native"
-    - rust: nightly
-      env: RUSTFLAGS="-C target-cpu=native"
-    - rust: nightly
-      env: CLIPPY="true"
   allow_failures:
     - rust: nightly
 cache: cargo
