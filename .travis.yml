@@ -21,8 +21,8 @@ cache: cargo
 install:
   - cargo build
 script:
-  - bash -c "[ $TRAVIS_RUST_VERSION == \"nightly\" ] && cargo test --verbose --all || true"
-  - bash -c "[ $TRAVIS_RUST_VERSION == \"nightly\" ] && cargo bench --verbose --all || true"
+  - cargo test --verbose --all
+  - cargo bench --verbose --all
 after_success: |
   wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
   tar xzf master.tar.gz &&
@@ -34,6 +34,8 @@ after_success: |
   make install DESTDIR=../../kcov-build &&
   cd ../.. &&
   rm -rf kcov-master &&
+  ls -las target/debug &&
+  pwd &&
   for file in target/debug/glip-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
   bash <(curl -s https://codecov.io/bash) &&
   echo "Uploaded code coverage"
