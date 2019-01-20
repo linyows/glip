@@ -3,7 +3,7 @@ GLIP
 
 **G**eographic **L**ocation for **IP** Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation).
 
-[![glip](https://img.shields.io/crates/v/glip.svg)][crates]
+[![glip](https://img.shields.io/crates/v/glip.svg?style=for-the-badge)][crates]
 [![Travis](https://img.shields.io/travis/linyows/glip.svg?style=for-the-badge)][travis]
 [![codecov](https://img.shields.io/codecov/c/github/linyows/glip.svg?style=for-the-badge)][codecov]
 [![GitHub release](http://img.shields.io/github/release/linyows/glip.svg?style=for-the-badge)][release]
