@@ -1,7 +1,7 @@
 GLIP
 ==
 
-Geographic location for IP Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation).
+**G**eographic **L**ocation for **IP** Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation).
 
 Usage
 --
