@@ -1,8 +1,19 @@
 language: rust
+sudo: required
 rust:
   - stable
   - beta
   - nightly
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
+      - gcc
+      - binutils-dev
+      - libiberty-dev
 matrix:
   fast_finish: true
   include:
@@ -22,6 +33,20 @@ install:
 script:
   - bash -c "[ $TRAVIS_RUST_VERSION == \"nightly\" ] && cargo test --verbose --all || true"
   - bash -c "[ $TRAVIS_RUST_VERSION == \"nightly\" ] && cargo bench --verbose --all || true"
+after_success: |
+  wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+  tar xzf master.tar.gz &&
+  cd kcov-master &&
+  mkdir build &&
+  cd build &&
+  cmake .. &&
+  make &&
+  make install DESTDIR=../../kcov-build &&
+  cd ../.. &&
+  rm -rf kcov-master &&
+  for file in target/debug/examplerust-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+  bash <(curl -s https://codecov.io/bash) &&
+  echo "Uploaded code coverage"
 notifications:
   slack: linyows:2oeZ2qcLnaMjbnEYodwEXKTr
   email: false
