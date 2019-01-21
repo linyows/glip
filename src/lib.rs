@@ -3,7 +3,6 @@
 extern crate maxminddb;
 extern crate reqwest;
 extern crate libflate;
-extern crate failure;
 
 mod emoji;
 use std::io;
