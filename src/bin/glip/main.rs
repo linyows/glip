@@ -5,18 +5,24 @@ extern crate clap;
 extern crate glip;
 
 use clap::{App, Arg, AppSettings};
-use glip::GLIP;
+use glip::GeoIp;
 use std::process;
 
-fn run(ipaddress: &str) {
-    let geoip = GLIP::new(ipaddress);
-    if geoip.is_ok() {
-        let s = geoip.unwrap();
-        println!("{}  {} -- {}, {}", s.flag, s.country, s.city, s.subdivision);
-        process::exit(0);
-    } else {
-        println!("{:?}", geoip.err());
+fn run(ip: &str, format: &str) -> i32 {
+    let geoip = GeoIp::new(ip);
+    if let Err(err) = geoip {
+        println!("Error: {}", err.to_string());
+        return 1;
     }
+
+    let g = geoip.unwrap();
+    match format {
+        "json" => println!("{{\"flag\":\"{}\",\"contry\":\"{}\",\"city\":\"{}\",\"subdivision\":\"{}\"}}", g.flag, g.country, g.city, g.subdivision),
+        "yaml" => println!("---\nflag: {}\ncountry: {}\ncity: {}\nsubdivision: {}\n", g.flag, g.country, g.city, g.subdivision),
+        _ => println!("{}  {} -- {}, {}", g.flag, g.country, g.city, g.subdivision),
+    };
+
+    return 0;
 }
 
 fn main() {
@@ -53,8 +59,9 @@ fn main() {
         )
         .get_matches();
 
-    if let Some(ipaddress) = matches.value_of("IP address") {
-        run(ipaddress);
+    if let Some(ip) = matches.value_of("IP address") {
+        let format = matches.value_of("format").unwrap();
+        process::exit(run(ip, format));
     } else {
         println!("IP address is required");
         process::exit(1);

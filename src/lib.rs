@@ -11,6 +11,7 @@ use std::env;
 use std::path::Path;
 use std::net::IpAddr;
 use std::str::FromStr;
+use std::error::Error;
 use maxminddb::geoip2;
 use libflate::gzip::Decoder;
 
@@ -21,14 +22,20 @@ static EXPIRATION_DURATION: u64 = 3600 * 24 * 32;
 static EMPTY_TXT: &'static str = "unknown";
 
 #[derive(Clone, Debug)]
-pub struct GLIP {
+pub struct GeoIp {
     pub country: String,
     pub subdivision: String,
     pub city: String,
     pub flag: String,
 }
 
-impl GLIP {
+#[derive(Debug)]
+pub enum GeoIpError {
+    ParseError(std::net::AddrParseError),
+    DBError(maxminddb::MaxMindDBError),
+}
+
+impl GeoIp {
     fn extract_file(fname: &str) {
         let mut file = fs::File::open(fname).unwrap();
         let mut decoder = Decoder::new(&mut file).unwrap();
@@ -95,13 +102,13 @@ impl GLIP {
         return city_model.get("en").unwrap().to_string();
     }
 
-    pub fn new(ip: &str) -> Result<Self, failure::Error> {
+    pub fn new(ip: &str) -> Result<Self, Box<Error>> {
         let ipaddr: IpAddr = FromStr::from_str(ip)?;
         let geoip: geoip2::City = Self::reader().unwrap().lookup(ipaddr)?;
         let country_model = geoip.country.unwrap().names.unwrap();
         let country = country_model.get("en").unwrap();
 
-        Ok(GLIP {
+        Ok(GeoIp {
             country: country.to_string(),
             subdivision: Self::pickup_subdivision(geoip.subdivisions),
             city: Self::pickup_city(geoip.city),
