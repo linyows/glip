@@ -9,9 +9,14 @@ use glip::GLIP;
 use std::process;
 
 fn run(ipaddress: &str) {
-    let ip = GLIP::new(ipaddress);
-    println!("{}  {} -- {}, {}", ip.flag, ip.country, ip.city, ip.subdivision);
-    process::exit(0);
+    let geoip = GLIP::new(ipaddress);
+    if geoip.is_ok() {
+        let s = geoip.unwrap();
+        println!("{}  {} -- {}, {}", s.flag, s.country, s.city, s.subdivision);
+        process::exit(0);
+    } else {
+        println!("{:?}", geoip.err());
+    }
 }
 
 fn main() {
