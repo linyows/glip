@@ -3,14 +3,15 @@
 extern crate maxminddb;
 extern crate reqwest;
 extern crate libflate;
+extern crate failure;
 
 mod emoji;
 use std::io;
 use std::fs;
+use std::env;
 use std::path::Path;
 use std::net::IpAddr;
 use std::str::FromStr;
-use std::env;
 use maxminddb::geoip2;
 use libflate::gzip::Decoder;
 
@@ -18,6 +19,7 @@ static SOURCE: &'static str = "https://geolite.maxmind.com/download/geoip/databa
 static TEMPFILE: &'static str = "GeoLite2-City.mmdb.gz";
 static FILE: &'static str = "/usr/local/share/glip/GeoLite2-City.mmdb";
 static EXPIRATION_DURATION: u64 = 3600 * 24 * 32;
+static EMPTY_TXT: &'static str = "unknown";
 
 #[derive(Clone, Debug)]
 pub struct GLIP {
@@ -77,20 +79,34 @@ impl GLIP {
         rr
     }
 
-    pub fn new(ip: &str) -> Self {
-        let ipaddr: IpAddr = FromStr::from_str(ip).unwrap();
-        let geoip: geoip2::City = Self::reader().unwrap().lookup(ipaddr).unwrap();
-        let country = geoip.country.unwrap().names.unwrap();
-        let c = country.get("en").unwrap();
-        let mut subdivs = geoip.subdivisions.unwrap();
-        let subdiv = subdivs.pop().unwrap().names.unwrap();
-        let city = geoip.city.unwrap().names.unwrap();
-
-        GLIP {
-            country: c.to_string(),
-            subdivision: subdiv.get("en").unwrap().to_string(),
-            city: city.get("en").unwrap().to_string(),
-            flag: emoji::flag(c),
+    fn pickup_subdivision(src: Option<Vec<geoip2::model::Subdivision>>) -> String {
+        if src.is_none() {
+            return EMPTY_TXT.to_string();
         }
+        let mut subdivs = src.unwrap();
+        let subdiv_model = subdivs.pop().unwrap().names.unwrap();
+        return subdiv_model.get("en").unwrap().to_string();
+    }
+
+    fn pickup_city(src: Option<geoip2::model::City>) -> String {
+        if src.is_none() {
+            return EMPTY_TXT.to_string();
+        }
+        let city_model = src.unwrap().names.unwrap();
+        return city_model.get("en").unwrap().to_string();
+    }
+
+    pub fn new(ip: &str) -> Result<Self, failure::Error> {
+        let ipaddr: IpAddr = FromStr::from_str(ip)?;
+        let geoip: geoip2::City = Self::reader().unwrap().lookup(ipaddr)?;
+        let country_model = geoip.country.unwrap().names.unwrap();
+        let country = country_model.get("en").unwrap();
+
+        Ok(GLIP {
+            country: country.to_string(),
+            subdivision: Self::pickup_subdivision(geoip.subdivisions),
+            city: Self::pickup_city(geoip.city),
+            flag: emoji::flag(country),
+        })
     }
 }
