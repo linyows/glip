@@ -1,7 +1,10 @@
-GLIP
-==
+![GLIP](https://raw.githubusercontent.com/linyows/glip/master/misc/glip.png)
 
-**G**eographic **L**ocation for **IP** Address with [MaxmindDB](https://www.maxmind.com/en/open-source-data-and-api-for-ip-geolocation).
+<p align="center">
+<strong>GLIP</strong>: <strong>G</strong>eographic <strong>L</strong>ocation for <strong>IP</strong> Address with MaxmindDB.
+</p>
+
+<br><br>
 
 [![glip](https://img.shields.io/crates/v/glip.svg?style=for-the-badge)][crates]
 [![Travis](https://img.shields.io/travis/linyows/glip.svg?style=for-the-badge)][travis]
