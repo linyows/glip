@@ -35,7 +35,7 @@ $ glip 118.105.100.30 -f json | jq '.'
   "subdivision": "Aichi"
 }
 
-$ glip 46.171.60.118 -f yaml`
+$ glip 46.171.60.118 -f yaml
 ---
 flag: 🇵🇱
 country: Poland
