@@ -1,9 +1,8 @@
+<br><br>
 <p align="center">
 <img alt="GLIP" src="https://raw.githubusercontent.com/linyows/glip/master/misc/glip.png" width=400><br><br>
 <strong>GLIP</strong>: <strong>G</strong>eographic <strong>L</strong>ocation for <strong>IP</strong> Address with MaxmindDB.
 </p>
-
-<br><br>
 
 <p align="center">
 <a href="https://crates.io/crates/glip"><img alt="glip" src="https://img.shields.io/crates/v/glip.svg?style=for-the-badge"></a>
@@ -12,6 +11,8 @@
 <a href="https://docs.rs/glip"><img alt="Rust Docs" src="http://img.shields.io/badge/rust-docs-blue.svg?style=for-the-badge"></a>
 <a href="https://github.com/linyows/glip/blob/master/LICENSE"><img alt="MIT License" src="http://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge"></a>
 </p>
+　
+　<br> <br> 
 
 Usage
 --
