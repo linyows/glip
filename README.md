@@ -1,7 +1,11 @@
 <p align="center">
 <img alt="GLIP" src="https://raw.githubusercontent.com/linyows/glip/master/misc/glip.png" width=400><br><br>
-<strong>GLIP</strong>: <strong>G</strong>eographic <strong>L</strong>ocation for <strong>IP</strong> Address with MaxmindDB.<br><br>
-  
+<strong>GLIP</strong>: <strong>G</strong>eographic <strong>L</strong>ocation for <strong>IP</strong> Address with MaxmindDB.
+</p>
+
+<br><br>
+
+<p align="center">
 <a href="https://crates.io/crates/glip"><img alt="glip" src="https://img.shields.io/crates/v/glip.svg?style=for-the-badge"></a>
 <a href="https://travis-ci.org/linyows/glip"><img alt="Travis" src="https://img.shields.io/travis/linyows/glip.svg?style=for-the-badge"></a>
 <a href="https://codecov.io/gh/linyows/glip"><img alt="codecov" src="https://img.shields.io/codecov/c/github/linyows/glip.svg?style=for-the-badge"></a>
