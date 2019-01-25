@@ -4,6 +4,9 @@ extern crate maxminddb;
 extern crate reqwest;
 extern crate libflate;
 
+#[macro_use]
+extern crate lazy_static;
+
 mod emoji;
 use std::io;
 use std::fs;
