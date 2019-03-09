@@ -5,11 +5,7 @@
 </p>
 
 <p align="center">
-<a href="https://crates.io/crates/glip"><img alt="glip" src="https://img.shields.io/crates/v/glip.svg?style=for-the-badge"></a>
-<a href="https://travis-ci.org/linyows/glip"><img alt="Travis" src="https://img.shields.io/travis/linyows/glip.svg?style=for-the-badge"></a>
-<a href="https://codecov.io/gh/linyows/glip"><img alt="codecov" src="https://img.shields.io/codecov/c/github/linyows/glip.svg?style=for-the-badge"></a>
-<a href="https://docs.rs/glip"><img alt="Rust Docs" src="http://img.shields.io/badge/rust-docs-blue.svg?style=for-the-badge"></a>
-<a href="https://github.com/linyows/glip/blob/master/LICENSE"><img alt="MIT License" src="http://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge"></a>
+<a href="https://crates.io/crates/glip"><img alt="glip" src="https://img.shields.io/crates/v/glip.svg?style=for-the-badge"></a><a href="https://travis-ci.org/linyows/glip"><img alt="Travis" src="https://img.shields.io/travis/linyows/glip.svg?style=for-the-badge"></a><a href="https://codecov.io/gh/linyows/glip"><img alt="codecov" src="https://img.shields.io/codecov/c/github/linyows/glip.svg?style=for-the-badge"></a><a href="https://docs.rs/glip"><img alt="Rust Docs" src="http://img.shields.io/badge/rust-docs-blue.svg?style=for-the-badge"></a><a href="https://github.com/linyows/glip/blob/master/LICENSE"><img alt="MIT License" src="http://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge"></a>
 </p>
 　
 　<br> <br> 
